@@ -35,16 +35,18 @@
   const mediaButtons = document.querySelectorAll('.media-thumb');
   const mediaItems = document.querySelectorAll('.showcase-media');
   const mediaInfo = document.querySelectorAll('.media-info');
-  mediaButtons.forEach((button) => button.addEventListener('click', () => {
-    const target = button.dataset.target;
+  const selectMedia = (target) => {
     mediaButtons.forEach((item) => {
-      const active = item === button;
+      const active = item.dataset.target === target;
       item.classList.toggle('is-active', active);
       item.setAttribute('aria-selected', String(active));
     });
     mediaItems.forEach((item) => item.classList.toggle('is-active', item.dataset.media === target));
     mediaInfo.forEach((item) => item.classList.toggle('is-active', item.dataset.info === target));
-  }));
+  };
+  const initialMedia = document.querySelector('.media-thumb.is-active')?.dataset.target || 'video';
+  selectMedia(initialMedia);
+  mediaButtons.forEach((button) => button.addEventListener('click', () => selectMedia(button.dataset.target)));
   const menuButton = document.querySelector('.menu-toggle');
   const menu = document.getElementById('site-menu');
   menuButton?.addEventListener('click', () => {
