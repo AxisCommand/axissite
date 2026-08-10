@@ -6,12 +6,29 @@
   });
   document.getElementById('year').textContent = new Date().getFullYear();
   const player = document.getElementById('demo-player');
-  const isConfiguredVideo = (value) => Boolean(value && !value.startsWith('REPLACE_WITH_'));
+  const getYouTubeVideoId = (value) => {
+    const input = String(value || '').trim();
+    if (!input || input.startsWith('REPLACE_WITH_')) return '';
+    if (/^[a-zA-Z0-9_-]{6,}$/.test(input)) return input;
+    try {
+      const url = new URL(input);
+      const host = url.hostname.replace(/^www\./, '');
+      if (host === 'youtu.be') return url.pathname.split('/').filter(Boolean)[0] || '';
+      if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtube-nocookie.com') {
+        const pathMatch = url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?#]+)/);
+        return url.searchParams.get('v') || pathMatch?.[1] || '';
+      }
+    } catch (_) {
+      return '';
+    }
+    return '';
+  };
   const updateDemoVideo = (language) => {
     if (!player) return;
     const video = language === 'ru' ? config.youtubeVideoIdRu : config.youtubeVideoIdEn;
-    const nextSource = isConfiguredVideo(video)
-      ? (video.startsWith('http') ? video : `https://www.youtube-nocookie.com/embed/${video}`)
+    const videoId = getYouTubeVideoId(video);
+    const nextSource = videoId
+      ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0`
       : 'about:blank';
     if (player.src !== nextSource) player.src = nextSource;
   };
