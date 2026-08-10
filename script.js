@@ -6,11 +6,15 @@
   });
   document.getElementById('year').textContent = new Date().getFullYear();
   const player = document.getElementById('demo-player');
-  if (player && config.youtubeVideoId) {
-    player.src = config.youtubeVideoId.startsWith('http')
-      ? config.youtubeVideoId
-      : `https://www.youtube-nocookie.com/embed/${config.youtubeVideoId}`;
-  }
+  const isConfiguredVideo = (value) => Boolean(value && !value.startsWith('REPLACE_WITH_'));
+  const updateDemoVideo = (language) => {
+    if (!player) return;
+    const video = language === 'ru' ? config.youtubeVideoIdRu : config.youtubeVideoIdEn;
+    const nextSource = isConfiguredVideo(video)
+      ? (video.startsWith('http') ? video : `https://www.youtube-nocookie.com/embed/${video}`)
+      : 'about:blank';
+    if (player.src !== nextSource) player.src = nextSource;
+  };
   const mediaButtons = document.querySelectorAll('.media-thumb');
   const mediaItems = document.querySelectorAll('.showcase-media');
   const mediaInfo = document.querySelectorAll('.media-info');
@@ -180,6 +184,7 @@
       node.nodeValue = isRussian ? original.replace(source, russian[source]) : original;
     });
     document.documentElement.lang = isRussian ? 'ru' : 'en';
+    updateDemoVideo(isRussian ? 'ru' : 'en');
     document.title = isRussian ? 'AxBOTS — Визуальная автоматизация Minecraft-ботов' : originalTitle;
     const switcher = document.querySelector('.language-switcher');
     if (switcher) switcher.dataset.currentLanguage = isRussian ? 'ru' : 'en';

@@ -10,7 +10,8 @@ A fast, dependency-free static landing page for GitHub Pages. It uses the existi
    - `githubUrl` — source repository.
    - `telegramManagerUrl` — manager contact and team applications.
    - `telegramChannelUrl` — Axis project channel.
-   - `youtubeVideoId` — the ID of the YouTube demo video. The workshop opens on this player first.
+   - `youtubeVideoIdEn` — the ID of the English YouTube demo.
+   - `youtubeVideoIdRu` — the ID of the Russian YouTube demo.
 2. Update product copy in `index.html` as the beta becomes more specific. The Minecraft version answer is intentionally marked as not finalized.
 3. Replace `cover.jpg` or `logo.jpg` if you have better exports. Keep the filenames, or update every reference in `index.html`.
 4. If you later add screenshots, place them beside the HTML file and replace the showcase placeholders in `index.html`.

@@ -7,5 +7,6 @@ window.AXIS_CONFIG = {
   telegramChannelUrl: "https://t.me/AxisProjectAI",
   demoUrl: "#showcase",
 
-  youtubeVideoId: "REPLACE_WITH_YOUTUBE_VIDEO_ID"
+  youtubeVideoIdEn: "https://youtu.be/6rYL6fLL_Go",
+  youtubeVideoIdRu: "https://youtu.be/cgppy7u7UkQ"
 };
